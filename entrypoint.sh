@@ -44,7 +44,7 @@ git_cmd git checkout -b "${PR_BRANCH}" origin/"${INPUT_PR_BRANCH}"
 echo "555"
 git config --global --add safe.directory '*'
 echo "666"
-git_cmd git cherry-pick "${GITHUB_SHA}"
+git_cmd git merge "${GITHUB_SHA}"
 echo "777"
 git_cmd git push -u origin "${PR_BRANCH}"
 echo "888"
