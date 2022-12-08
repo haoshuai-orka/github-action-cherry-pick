@@ -9,11 +9,10 @@ git_setup() {
 		login $GITHUB_ACTOR
 		password $GITHUB_TOKEN
 EOF
+  git config --global --add safe.directory '*'
   chmod 600 $HOME/.netrc
-
   git config --global user.email "$GITBOT_EMAIL"
   git config --global user.name "$GITHUB_ACTOR"
-  git config --global --add safe.directory '*'
 }
 
 git_cmd() {
