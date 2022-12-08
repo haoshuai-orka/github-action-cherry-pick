@@ -45,6 +45,8 @@ echo "111"
 echo "$GITHUB_TOKEN"
 echo "222"
 
+echo "$PWD"
+
 git_cmd git clone --single-branch --branch "test" "https://x-access-token:$GITHUB_TOKEN@github.com/haoshuai-orka/temp_algo.git" "$CLONE_DIR"
 echo "333"
 
