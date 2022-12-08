@@ -36,12 +36,17 @@ PR_TITLE=$(git log -1 --format="%s" $GITHUB_SHA)
 CLONE_DIR=$(mktemp -d)
 
 git_setup
+echo "aaa"
 git_cmd git remote update
+echo "bbb"
 git_cmd git fetch --all
 
+echo "111"
 echo "$API_TOKEN_GITHUB"
+echo "222"
 
 git_cmd git clone --single-branch --branch "test" "https://x-access-token:$API_TOKEN_GITHUB@github.com/haoshuai-orka/temp_algo.git" "$CLONE_DIR"
+echo "333"
 
 cd "$CLONE_DIR"
 
