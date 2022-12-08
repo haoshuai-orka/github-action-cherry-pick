@@ -61,4 +61,5 @@ git remote update
 git_cmd git merge --allow-unrelated-histories "src_repo/main"
 echo "666"
 git_cmd git push -u origin "test"
+git remote update
 git_cmd hub pull-request -b "main" -h "test" -l "${INPUT_PR_LABELS}" -a "${GITHUB_ACTOR}" -m "\"AUTO: ${PR_TITLE}\""
