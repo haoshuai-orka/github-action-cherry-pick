@@ -57,6 +57,7 @@ git remote update
 
 #git_cmd git checkout -b "${PR_BRANCH}" origin/"${INPUT_PR_BRANCH}"
 #git_cmd git config --global --add safe.directory '*'
+git_cmd git remote show src_repo
 git_cmd git merge --allow-unrelated-histories "src_repo/main"
 git_cmd git push -u origin "test"
 git_cmd hub pull-request -b "main" -h "${PR_BRANCH}" -l "${INPUT_PR_LABELS}" -a "${GITHUB_ACTOR}" -m "\"AUTO: ${PR_TITLE}\""
