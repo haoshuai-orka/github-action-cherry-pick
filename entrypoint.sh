@@ -33,13 +33,20 @@ fi
 
 PR_TITLE=$(git log -1 --format="%s" $GITHUB_SHA)
 
+echo "111"
 git_setup
+echo "222"
 git_cmd git remote update
+echo "333"
 git_cmd git fetch --all
+echo "444"
 git_cmd git checkout -b "${PR_BRANCH}" origin/"${INPUT_PR_BRANCH}"
+echo "555"
 git config --global --add safe.directory '*'
-echo "first"
+echo "666"
 git_cmd git cherry-pick "${GITHUB_SHA}"
-echo "second"
+echo "777"
 git_cmd git push -u origin "${PR_BRANCH}"
+echo "888"
 git_cmd hub pull-request -b "${INPUT_PR_BRANCH}" -h "${PR_BRANCH}" -l "${INPUT_PR_LABELS}" -a "${GITHUB_ACTOR}" -m "\"AUTO: ${PR_TITLE}\""
+echo "999"
