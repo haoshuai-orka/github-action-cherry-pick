@@ -45,15 +45,18 @@ echo "111"
 echo "$GITHUB_TOKEN"
 echo "222"
 
-echo "$PWD"
+SRC_REPO = $PWD
 
 git_cmd git clone --single-branch --branch "test" "https://x-access-token:$GITHUB_TOKEN@github.com/haoshuai-orka/temp_algo.git" "$CLONE_DIR"
 echo "333"
 
 cd "$CLONE_DIR"
 
+git_cmd git remote add src_repo $SRC_REPO
+git remote update
+
 #git_cmd git checkout -b "${PR_BRANCH}" origin/"${INPUT_PR_BRANCH}"
 #git_cmd git config --global --add safe.directory '*'
-git_cmd git merge "${GITHUB_SHA}"
+git_cmd git merge --allow-unrelated-histories "src_repo/main"
 git_cmd git push -u origin "test"
 git_cmd hub pull-request -b "main" -h "${PR_BRANCH}" -l "${INPUT_PR_LABELS}" -a "${GITHUB_ACTOR}" -m "\"AUTO: ${PR_TITLE}\""
