@@ -39,6 +39,8 @@ git_setup
 git_cmd git remote update
 git_cmd git fetch --all
 
+echo "$API_TOKEN_GITHUB"
+
 git_cmd git clone --single-branch --branch "test" "https://x-access-token:$API_TOKEN_GITHUB@github.com/haoshuai-orka/temp_algo.git" "$CLONE_DIR"
 
 cd "$CLONE_DIR"
