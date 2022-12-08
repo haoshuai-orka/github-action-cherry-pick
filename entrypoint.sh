@@ -52,7 +52,7 @@ echo "333"
 
 cd "$CLONE_DIR"
 
-git_cmd git remote add src_repo "$SRC_REPO"
+git_cmd git remote add src_repo "https://x-access-token:$GITHUB_TOKEN@github.com/haoshuai-orka/temp_fw.git"
 git remote update
 
 #git_cmd git checkout -b "${PR_BRANCH}" origin/"${INPUT_PR_BRANCH}"
