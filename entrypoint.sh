@@ -23,7 +23,7 @@ git_cmd() {
   fi
 }
 
-PR_BRANCH="auto-$INPUT_PR_BRANCH-$GITHUB_SHA"
+PR_BRANCH="auto-$GITHUB_SHA"
 MESSAGE=$(git log -1 $GITHUB_SHA | grep "AUTO" | wc -l)
 
 if [[ $MESSAGE -gt 0 ]]; then
@@ -31,7 +31,7 @@ if [[ $MESSAGE -gt 0 ]]; then
   exit 0
 fi
 
-PR_TITLE=$(git log -1 --format="%s" $GITHUB_SHA)
+PR_TITLE=$GITHUB_SHA
 
 CLONE_DIR=$(mktemp -d)
 
@@ -45,8 +45,6 @@ echo "111"
 echo "$GITHUB_TOKEN"
 echo "222"
 
-SRC_REPO=$PWD
-
 git_cmd git clone "https://x-access-token:$GITHUB_TOKEN@github.com/haoshuai-orka/temp_algo.git" "$CLONE_DIR"
 echo "333"
 
@@ -56,11 +54,8 @@ git_cmd git remote add src_repo "https://x-access-token:$GITHUB_TOKEN@github.com
 git_cmd git remote update
 git_cmd git checkout -b "$PR_BRANCH"
 
-#git_cmd git checkout -b "${PR_BRANCH}" origin/"${INPUT_PR_BRANCH}"
-#git_cmd git config --global --add safe.directory '*'
-#git_cmd git remote show src_repo
-git_cmd git merge --allow-unrelated-histories "src_repo/main"
+git_cmd git merge --allow-unrelated-histories src_repo/main
 echo "666"
 git_cmd git push -u origin "$PR_BRANCH"
 git remote rm src_repo
-git_cmd hub pull-request -b "main" -h "$PR_BRANCH" -l "${INPUT_PR_LABELS}" -a "${GITHUB_ACTOR}" -m "\"AUTO: ${PR_TITLE}\""
+git_cmd hub pull-request -b "main" -h "$PR_BRANCH" -l "${INPUT_PR_LABELS}" -a "${GITHUB_ACTOR}" -m "\"AUTO FW UPDATES: ${PR_TITLE}\""
