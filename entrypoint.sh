@@ -47,7 +47,7 @@ echo "222"
 
 SRC_REPO=$PWD
 
-git_cmd git clone --single-branch --branch "test" "https://x-access-token:$GITHUB_TOKEN@github.com/haoshuai-orka/temp_algo.git" "$CLONE_DIR"
+git_cmd git clone --single-branch --branch "$PR_BRANCH" "https://x-access-token:$GITHUB_TOKEN@github.com/haoshuai-orka/temp_algo.git" "$CLONE_DIR"
 echo "333"
 
 cd "$CLONE_DIR"
@@ -60,6 +60,6 @@ git remote update
 #git_cmd git remote show src_repo
 git_cmd git merge --allow-unrelated-histories "src_repo/main"
 echo "666"
-git_cmd git push -u origin "test"
+git_cmd git push -u origin "$PR_BRANCH"
 git remote rm src_repo
-git_cmd hub pull-request -b "main" -h "test" -l "${INPUT_PR_LABELS}" -a "${GITHUB_ACTOR}" -m "\"AUTO: ${PR_TITLE}\""
+git_cmd hub pull-request -b "main" -h "$PR_BRANCH" -l "${INPUT_PR_LABELS}" -a "${GITHUB_ACTOR}" -m "\"AUTO: ${PR_TITLE}\""
