@@ -47,13 +47,14 @@ echo "222"
 
 SRC_REPO=$PWD
 
-git_cmd git clone --single-branch --branch "$PR_BRANCH" "https://x-access-token:$GITHUB_TOKEN@github.com/haoshuai-orka/temp_algo.git" "$CLONE_DIR"
+git_cmd git clone "https://x-access-token:$GITHUB_TOKEN@github.com/haoshuai-orka/temp_algo.git" "$CLONE_DIR"
 echo "333"
 
 cd "$CLONE_DIR"
 
 git_cmd git remote add src_repo "https://x-access-token:$GITHUB_TOKEN@github.com/haoshuai-orka/temp_fw.git"
-git remote update
+git_cmd git remote update
+git_cmd git checkout -b "$PR_BRANCH"
 
 #git_cmd git checkout -b "${PR_BRANCH}" origin/"${INPUT_PR_BRANCH}"
 #git_cmd git config --global --add safe.directory '*'
