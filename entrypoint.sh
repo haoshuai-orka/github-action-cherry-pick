@@ -34,19 +34,20 @@ fi
 PR_TITLE=$GITHUB_SHA
 CLONE_DIR=$(mktemp -d)
 
-echo "SRC REPO NAME: $SRC_REPO_NAME"
-
+#fetch src repo
 git_setup
 git_cmd git remote update
 git_cmd git fetch --all
-git_cmd git clone "https://x-access-token:$GITHUB_TOKEN@github.com/haoshuai-orka/temp_algo.git" "$CLONE_DIR"
-cd "$CLONE_DIR"
 
-#src repo should be fw repo and should be configured as an input argument
-git_cmd git remote add fw_repo "https://x-access-token:$GITHUB_TOKEN@github.com/haoshuai-orka/temp_fw.git"
+#merge src repo pr to dst repo
+git_cmd git clone "https://x-access-token:$GITHUB_TOKEN@github.com/$DST_REPO_OWNER/$DST_REPO_NAME.git" "$CLONE_DIR"
+cd "$CLONE_DIR"
+git_cmd git remote add "$SRC_REPO_REMOTE_NAME" "https://x-access-token:$GITHUB_TOKEN@github.com/$SRC_REPO_OWNER/$SRC_REPO_NAME.git"
 git_cmd git remote update
 git_cmd git checkout -b "$PR_BRANCH"
-git_cmd git merge --allow-unrelated-histories fw_repo/main
+git_cmd git merge --allow-unrelated-histories "$SRC_REPO_REMOTE_NAME/$SRC_REPO_PR_BRANCH"
 git_cmd git push -u origin "$PR_BRANCH"
-git remote rm fw_repo
-git_cmd hub pull-request -b "main" -h "$PR_BRANCH" -l "${INPUT_PR_LABELS}" -a "${GITHUB_ACTOR}" -m "\"AUTO FW UPDATES: ${PR_TITLE}\""
+
+#create pr on dst repo
+git remote rm "$SRC_REPO_REMOTE_NAME"
+git_cmd hub pull-request -b "$DST_REPO_PR_BRANCH" -h "$PR_BRANCH" -l "${INPUT_PR_LABELS}" -a "${GITHUB_ACTOR}" -m "\"$DST_PR_TITLE_PREFIX: ${PR_TITLE}\""
